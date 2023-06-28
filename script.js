@@ -31,3 +31,20 @@ function operate(operator, num1, num2) {
             return null;
     }
 }
+
+function updateDisplayValue(num){
+    const display = document.querySelector(".screen-current")
+    display.textContent = num;
+}
+
+function getNumInput(e){
+    const num = e.target.getAttribute('data-number');
+    numValue += num;
+    updateDisplayValue(numValue);
+}
+
+let numValue = '';
+
+const buttons = document.querySelectorAll(".btn");
+buttons.forEach(button => button.addEventListener('click', getNumInput))
+

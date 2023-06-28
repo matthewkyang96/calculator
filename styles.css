@@ -35,12 +35,19 @@ body {
 
 .screen-current {
     height: 150px;
+    font-size: 38px;
 }
 
 .screen-last,
 .screen-current {
+    display:flex;
+    align-items: center;
+    flex-wrap: wrap;
     padding: 10px;
     width: 445px;
+    direction: rtl;
+    text-align: right;
+    text-overflow: hidden;
 }
 
 .buttons {
