@@ -98,6 +98,11 @@ function clear(){
     updateDisplay();
 }
 
+function deleteNum(){
+    numValue = numValue.substring(0,numValue.length-1);
+    updateDisplay();
+}
+
 let numValue = '';
 let prevNumValue = '';
 let operator = '';
@@ -113,3 +118,6 @@ operateButton.addEventListener('click', evaluate);
 
 const clearButton = document.querySelector(".clear")
 clearButton.addEventListener('click', clear);
+
+const deleteButton = document.querySelector(".delete")
+deleteButton.addEventListener('click', deleteNum);
