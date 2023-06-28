@@ -38,6 +38,7 @@ function updateDisplayValue(num){
 }
 
 function getNumInput(e){
+    if (numValue.length > 16) return alert('Max Number of Digits Reached!');
     const num = e.target.getAttribute('data-number');
     numValue += num;
     updateDisplayValue(numValue);
