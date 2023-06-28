@@ -41,11 +41,11 @@ body {
 .screen-last,
 .screen-current {
     display:flex;
+    justify-content: right;
     align-items: center;
     flex-wrap: wrap;
     padding: 10px;
     width: 445px;
-    direction: rtl;
     text-align: right;
     text-overflow: hidden;
 }

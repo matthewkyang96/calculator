@@ -33,19 +33,83 @@ function operate(operator, num1, num2) {
 }
 
 function updateDisplayValue(num){
-    const display = document.querySelector(".screen-current")
+    const display = document.querySelector(".screen-current");
     display.textContent = num;
 }
 
-function getNumInput(e){
-    if (numValue.length > 16) return alert('Max Number of Digits Reached!');
+function updatePrevDisplayValue(expression) {
+    const display = document.querySelector(".screen-last");
+    display.textContent = expression;
+}
+
+function updateDisplay(){
+    const currDisplay = document.querySelector(".screen-current");
+    currDisplay.textContent = numValue;
+
+    const prevDisplay = document.querySelector(".screen-last");
+    if (operator != "" && prevNumValue != ""){
+        prevDisplay.textContent = `${prevNumValue} ${operator}`
+    } else {
+        prevDisplay.textContent = prevNumValue;
+    }
+}
+
+function appendNumber(e){
     const num = e.target.getAttribute('data-number');
+
+    if (numValue.length > 16) return alert('Max Number of Digits Reached!');
+    if (num === "." && numValue.includes(".")) return
+
     numValue += num;
-    updateDisplayValue(numValue);
+
+    updateDisplay();
+}
+
+function getOperation(e){
+    operator = e.target.getAttribute('data-operator');
+
+    if (numValue == '') {
+        updateDisplay();
+        return;
+    }
+    if (prevNumValue != '') {
+        prevNumValue = operate(operator, prevNumValue, numValue);
+        numValue = '';
+    } else {
+    prevNumValue = numValue;
+    numValue = '';
+    }
+    updateDisplay();
+}
+
+function evaluate(){
+    if (isNaN(prevNumValue) || isNaN(numValue)) return;
+    numValue = operate(operator, prevNumValue, numValue);
+    prevNumValue = '';
+    operator = '';
+    updateDisplay();
+    numValue = '';
+}
+
+function clear(){
+    numValue = '';
+    prevNumValue = '';
+    operator = '';
+    updateDisplay();
 }
 
 let numValue = '';
+let prevNumValue = '';
+let operator = '';
 
-const buttons = document.querySelectorAll(".btn");
-buttons.forEach(button => button.addEventListener('click', getNumInput))
+const numButtons = document.querySelectorAll("button[data-number]");
+numButtons.forEach(numButton => numButton.addEventListener('click', appendNumber))
 
+const operatorButtons = document.querySelectorAll("button[data-operator]");
+operatorButtons.forEach( operatorButton => operatorButton.addEventListener('click', getOperation))
+
+const operateButton = document.querySelector("button[data-operate]");
+operateButton.addEventListener('click', evaluate);
+
+const clearButton = document.querySelector(".clear")
+clearButton.addEventListener('click', clear);
