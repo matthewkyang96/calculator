@@ -32,16 +32,6 @@ function operate(operator, num1, num2) {
     }
 }
 
-function updateDisplayValue(num){
-    const display = document.querySelector(".screen-current");
-    display.textContent = num;
-}
-
-function updatePrevDisplayValue(expression) {
-    const display = document.querySelector(".screen-last");
-    display.textContent = expression;
-}
-
 function updateDisplay(){
     const currDisplay = document.querySelector(".screen-current");
     currDisplay.textContent = numValue;
@@ -85,6 +75,12 @@ function getOperation(e){
 function evaluate(){
     if (isNaN(prevNumValue) || isNaN(numValue)) return;
     numValue = operate(operator, prevNumValue, numValue);
+    if (numValue == null) {
+        numValue = 'Cannot Divide by Zero';
+        updateDisplay();
+        numValue = '';
+        return;
+    }
     prevNumValue = '';
     operator = '';
     updateDisplay();
